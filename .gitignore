@@ -1,0 +1,15 @@
+# Misc
+.idea
+.vscode
+
+# Node dependencies
+node_modules
+
+# Config files
+/src/config/*
+!/src/config/database.js
+
+# Local env files
+.env
+.env.*
+!.env.example
