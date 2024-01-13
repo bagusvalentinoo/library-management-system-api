@@ -6,7 +6,9 @@ const Auth = require('@middlewares/auth.middleware')
 const { isOfficer: IsOfficer } = require('@middlewares/role.middleware')
 const Upload = require('@middlewares/local_storage.middleware')
 const BookController = require('@controllers/officer/book/book.controller')
+const MemberController = require('@controllers/officer/member/member.controller')
 
+// Book routes
 router.get('/books', ApiKey, Auth, IsOfficer, async (req, res) => {
   await BookController.index(req, res)
 })
@@ -29,6 +31,31 @@ router.delete('/books/:id', ApiKey, Auth, IsOfficer, async (req, res) => {
 
 router.delete('/books', ApiKey, Auth, IsOfficer, async (req, res) => {
   await BookController.destroyBulk(req, res)
+})
+
+// Member routes
+router.get('/members', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.index(req, res)
+})
+
+router.get('/members/:id', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.show(req, res)
+})
+
+router.put('/members/:id/penalty', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.penaltyMember(req, res)
+})
+
+router.put('/members/:id/clear-penalty', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.clearPenaltyMember(req, res)
+})
+
+router.put('/members/:id/block', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.blockMember(req, res)
+})
+
+router.put('/members/:id/unblock', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.unblockMember(req, res)
 })
 
 module.exports = router

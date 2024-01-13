@@ -6,7 +6,7 @@ const orderBy = (query) => {
   const validSortDir = ['ASC', 'DESC']
   const normalizedSortDir = validSortDir.includes(convertToUpperCase(sort_dir ?? '')) ? convertToUpperCase(sort_dir) : 'DESC'
 
-  return sort_by ? [[convertToLowerCase(sort_by), normalizedSortDir]] : [['updated_at', 'DESC']]
+  return sort_by ? [[convertToLowerCase(sort_by), normalizedSortDir]] : [['created_at', 'DESC'], ['updated_at', 'DESC']]
 }
 
 module.exports = { orderBy }

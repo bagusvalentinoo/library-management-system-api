@@ -10,7 +10,7 @@ const cleanUpToken = require('@tasks/token/clean_up_token.task')
 const ApiRouteV1 = require('@routes/v1/api.route')
 require('dotenv').config()
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'src', 'public')))
 
 morgan.token('body', (req, res) => {
   return JSON.stringify(req.body)
