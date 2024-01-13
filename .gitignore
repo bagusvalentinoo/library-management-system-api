@@ -9,6 +9,10 @@ node_modules
 /src/config/*
 !/src/config/database.js
 
+# Public Local Storage
+/public/images/*
+!/public/images/default_photo_profile.jpg
+
 # Local env files
 .env
 .env.*

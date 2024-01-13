@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
-  class Admin extends Model {
+  class Officer extends Model {
     static associate(models) {
       // BelongsTo Relationship
       this.belongsTo(models.User, {
@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
     }
   }
 
-  Admin.init(
+  Officer.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -62,13 +62,13 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
-      modelName: 'Admin',
-      tableName: 'admins',
+      modelName: 'Officer',
+      tableName: 'officers',
       timestamps: true,
       createdAt: 'created_at',
       updatedAt: 'updated_at'
     }
   )
 
-  return Admin
+  return Officer
 }

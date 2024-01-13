@@ -6,16 +6,16 @@ require('dotenv').config()
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const userAdmin = await User.create({
-      'name': 'Admin',
-      'username': 'admin',
-      'email': 'admin@example.com',
+    const userOfficer = await User.create({
+      'name': 'Officer',
+      'username': 'officer',
+      'email': 'officer@example.com',
       'password': bcrypt.hashSync('qwerty12345', 10),
       'created_at': new Date(),
       'updated_at': new Date()
     })
-    await userAdmin.assignRole('Admin')
-    await userAdmin.createAdmin({
+    await userOfficer.assignRole('Officer')
+    await userOfficer.createOfficer({
       'gender': 'Male',
       'photo_profile_url': process.env.DEFAULT_AVATAR_URL,
       'created_at': new Date(),

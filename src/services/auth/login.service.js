@@ -19,9 +19,9 @@ const checkLoginCredentials = async (req) => {
   })
 
   if (!user)
-    response.throwNewError(400, 'Oops! Username, Email, or Phone Number and Password didn\'t match')
+    response.throwNewError(400, 'Oops! Username, or Email, and Password didn\'t match')
   if (!bcrypt.compareSync(req.body.password, user.password))
-    response.throwNewError(400, 'Oops! Username, Email, or Phone Number and Password didn\'t match')
+    response.throwNewError(400, 'Oops! Username, or Email, and Password didn\'t match')
 
   return user
 }

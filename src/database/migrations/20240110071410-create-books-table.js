@@ -1,28 +1,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('admins', {
+    await queryInterface.createTable('books', {
       id: {
         type: Sequelize.DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
         defaultValue: Sequelize.DataTypes.UUIDV4
       },
-      user_id: {
-        type: Sequelize.DataTypes.UUID,
+      code: {
+        type: Sequelize.DataTypes.STRING(10),
         allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'RESTRICT'
+        unique: true
       },
-      gender: {
-        type: Sequelize.DataTypes.ENUM('Male', 'Female', 'Other'),
+      title: {
+        type: Sequelize.DataTypes.STRING(100),
         allowNull: false
       },
-      photo_profile_url: {
+      author: {
+        type: Sequelize.DataTypes.STRING(50),
+        allowNull: false
+      },
+      quantity: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+      },
+      photo_url: {
         type: Sequelize.DataTypes.TEXT,
         allowNull: true
       },
@@ -40,6 +43,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('admins')
+    await queryInterface.dropTable('books')
   }
 }

@@ -24,5 +24,6 @@ const checkUserRole = (role) => async (req, res, next) => {
 }
 
 module.exports = {
-  isYourLevelUserHere: checkUserRole('Your Level User Here'),
+  isOfficer: checkUserRole('Officer'),
+  isMember: checkUserRole('Member')
 }

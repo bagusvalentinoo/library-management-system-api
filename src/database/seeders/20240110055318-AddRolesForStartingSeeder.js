@@ -6,7 +6,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await Role.bulkCreate([
       {
-        name: 'Admin',
+        name: 'Officer',
         created_at: new Date(),
         updated_at: new Date()
       },
