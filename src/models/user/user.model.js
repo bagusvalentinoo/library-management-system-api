@@ -5,9 +5,9 @@ module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
       // HasOne Relationships
-      this.hasOne(models.Admin, {
+      this.hasOne(models.Officer, {
         foreignKey: 'user_id',
-        as: 'admin'
+        as: 'officer'
       })
 
       this.hasOne(models.Member, {

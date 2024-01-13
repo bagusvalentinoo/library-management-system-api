@@ -1,6 +1,6 @@
 require('module-alias/register')
 const response = require('@helpers/http/response')
-const UserService = require('@services/user/user.service')
+const UserService = require('@services/public/user.service')
 
 const checkUsername = async (req, res) => {
   try {
@@ -15,6 +15,7 @@ const checkUsername = async (req, res) => {
       }
     )
   } catch (error) {
+    console.log(error)
     return response.failed(res, error.status_code ?? 500, error)
   }
 }
@@ -32,6 +33,7 @@ const checkEmail = async (req, res) => {
       }
     )
   } catch (error) {
+    console.log(error)
     return response.failed(res, error.status_code ?? 500, error)
   }
 }
