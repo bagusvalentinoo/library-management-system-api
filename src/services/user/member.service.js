@@ -5,7 +5,7 @@ const {
   convertToLowerCase
 } = require('@helpers/string/string_formatted')
 const MemberForListOfficerCollection = require('@resources/user/member/member_for_list_officer_collection')
-const { Sequelize, Op, Member, User } = require('@models')
+const { Sequelize, Op, Member, User, UserRole, UserToken } = require('@models')
 
 const orderByCustom = (query) => {
   const { sort_by, sort_dir } = query
@@ -128,6 +128,28 @@ const unblockMember = async (req, member, t) => {
   return await member.update({ is_blocked: false }, { transaction: t })
 }
 
+const deleteMember = async (req, member, t) => {
+  await member.destroy({ transaction: t })
+  await UserRole.destroy({ where: { user_id: member.user_id }, transaction: t })
+  await UserToken.destroy({ where: { user_id: member.user_id }, transaction: t })
+  return await User.destroy({ where: { id: member.user_id }, transaction: t })
+}
+
+const deleteMembers = async (req, ids, t) => {
+  const members = await Member.findAll({
+    where: { id: { [Op.in]: ids } }
+  })
+
+  if (members.length === 0)
+    response.throwNewError(400, 'Oops! Members not found')
+
+  for (const member of members) {
+    await deleteMember(req, member, t)
+  }
+
+  return true
+}
+
 module.exports = {
   getMembers,
   findMemberById,
@@ -135,5 +157,7 @@ module.exports = {
   penaltyMember,
   clearPenaltyMember,
   blockMember,
-  unblockMember
+  unblockMember,
+  deleteMember,
+  deleteMembers
 }
