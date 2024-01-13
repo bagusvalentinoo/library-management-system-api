@@ -81,7 +81,7 @@ const updateBook = async (req, book, t) => {
 
   if (!file_url) {
     if (book.photo_url) {
-      const filePath = path.join(__dirname, `/../../../public/${getFilePathFromUrl(book.photo_url)}`)
+      const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(book.photo_url)}`)
       fs.unlinkSync(filePath)
       await book.update({ photo_url: null }, { transaction: t })
     }
@@ -92,7 +92,7 @@ const updateBook = async (req, book, t) => {
 
 const deleteBook = async (req, book, t) => {
   if (book.photo_url) {
-    const filePath = path.join(__dirname, `/../../../public/${getFilePathFromUrl(book.photo_url)}`)
+    const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(book.photo_url)}`)
     fs.unlinkSync(filePath)
   }
 
