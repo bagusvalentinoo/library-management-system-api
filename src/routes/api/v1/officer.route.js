@@ -58,4 +58,12 @@ router.put('/members/:id/unblock', ApiKey, Auth, IsOfficer, async (req, res) => 
   await MemberController.unblockMember(req, res)
 })
 
+router.delete('/members/:id', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.destroySingle(req, res)
+})
+
+router.delete('/members', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.destroyBulk(req, res)
+})
+
 module.exports = router

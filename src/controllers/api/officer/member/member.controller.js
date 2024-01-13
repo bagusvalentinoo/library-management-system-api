@@ -97,11 +97,42 @@ const unblockMember = async (req, res) => {
   }
 }
 
+const destroySingle = async (req, res) => {
+  const t = await sequelize.transaction()
+  try {
+    const member = await MemberService.findMemberById(req.params.id)
+    await MemberService.deleteMember(req, member, t)
+    await t.commit()
+
+    return response.success(res, 200, 'Successfully deleted member')
+  } catch (error) {
+    console.log(error)
+    if (t) await t.rollback()
+    return response.failed(res, error.status_code ?? 500, error)
+  }
+}
+
+const destroyBulk = async (req, res) => {
+  const t = await sequelize.transaction()
+  try {
+    await MemberService.deleteMembers(req, req.body.ids, t)
+    await t.commit()
+
+    return response.success(res, 200, 'Successfully deleted members')
+  } catch (error) {
+    console.log(error)
+    if (t) await t.rollback()
+    return response.failed(res, error.status_code ?? 500, error)
+  }
+}
+
 module.exports = {
   index,
   show,
   penaltyMember,
   clearPenaltyMember,
   blockMember,
-  unblockMember
+  unblockMember,
+  destroySingle,
+  destroyBulk
 }
