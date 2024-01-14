@@ -3,7 +3,11 @@ const { Model, DataTypes } = require('sequelize')
 module.exports = (sequelize) => {
   class Book extends Model {
     static associate(models) {
-      // define association here
+      // HasMany Relationship
+      this.hasMany(models.Borrow, {
+        as: 'borrows',
+        foreignKey: 'book_id'
+      })
     }
   }
 
