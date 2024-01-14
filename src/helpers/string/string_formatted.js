@@ -63,6 +63,18 @@ const generateRandomPassword = (length) => {
   return password
 }
 
+const generateRandomCode = (length) => {
+  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let code = ''
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = crypto.randomInt(0, charset.length)
+    code += charset[randomIndex]
+  }
+
+  return code
+}
+
 const getCurrentDateFormatted = () => {
   const date = new Date()
   const year = date.getFullYear()
@@ -84,5 +96,6 @@ module.exports = {
   generateRandomCharacter,
   generateUsernameFromName,
   generateRandomPassword,
+  generateRandomCode,
   getCurrentDateFormatted
 }
