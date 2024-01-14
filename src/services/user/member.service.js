@@ -30,6 +30,26 @@ const getMembers = async (req) => {
     order,
     subQuery: false,
     distinct: true,
+    attributes: [
+      'id',
+      'code',
+      'phone_number',
+      'address',
+      'is_penalized',
+      'is_blocked',
+      'penalty_end_date',
+      [
+        Sequelize.literal(`CAST((
+          SELECT COUNT(*)
+          FROM "borrows" AS "borrow"
+          WHERE "borrow"."member_id" = "Member"."id"
+          AND "borrow"."is_returned" = true
+        ) AS INTEGER)`),
+        'borrowed_books_count'
+      ],
+      'created_at',
+      'updated_at'
+    ],
     include: {
       model: User,
       as: 'user',
@@ -61,6 +81,8 @@ const getMembers = async (req) => {
   }
 
   const members = await Member.findAndCountAll(responsePayloadMember)
+
+  console.log("Members: ", members.rows)
 
   return response.paginate(
     members,
