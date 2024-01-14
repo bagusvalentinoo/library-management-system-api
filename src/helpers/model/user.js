@@ -1,5 +1,5 @@
 require('module-alias/register')
-const { Member } = require('@models')
+const { Member, Officer } = require('@models')
 
 const getMemberIdFromUserId = async (userId) => {
   const member = await Member.findOne({
@@ -9,6 +9,15 @@ const getMemberIdFromUserId = async (userId) => {
   return member.id
 }
 
+const getOfficerIdFromUserId = async (userId) => {
+const officer = await Officer.findOne({
+    where: { user_id: userId }
+  })
+
+  return officer.id
+}
+
 module.exports = {
-  getMemberIdFromUserId
+  getMemberIdFromUserId,
+  getOfficerIdFromUserId
 }
