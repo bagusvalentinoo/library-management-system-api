@@ -5,7 +5,6 @@ const BorrowHistoryService = require('@services/transaction/borrow_history.servi
 const index = async (req, res) => {
   try {
     const borrowHistories = await BorrowHistoryService.getBorrowHistories(req)
-    console.log("Borrow Histories: ", borrowHistories)
 
     return response.success(
       res,

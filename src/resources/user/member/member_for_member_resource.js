@@ -1,4 +1,4 @@
-class MemberForListOfficerCollection {
+class MemberForMemberResource {
   constructor(data) {
     this.id = data.id
     this.code = data.code
@@ -12,15 +12,10 @@ class MemberForListOfficerCollection {
     this.is_blocked = data.is_blocked
     this.is_penalized = data.is_penalized
     this.penalty_end_date = data.penalty_end_date
-    this.borrowed_books_count = data.dataValues.borrowed_books_count
     this.photo_profile_url = data.photo_profile_url
     this.created_at = data.created_at
     this.updated_at = data.updated_at
   }
-
-  static collection(dataCollection) {
-    return dataCollection.map(data => new MemberForListOfficerCollection(data))
-  }
 }
 
-module.exports = MemberForListOfficerCollection
+module.exports = MemberForMemberResource

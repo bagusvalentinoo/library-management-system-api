@@ -69,22 +69,20 @@ const findBookById = async (id) => {
 const updateBook = async (req, book, t) => {
   const { file_url } = req
   const { code, title, author, quantity } = req.body
+  const oldPhotoUrl = book.photo_url
 
   const bookUpdated = await book.update({
-    code: code ?? book.code,
-    title: title ?? book.title,
-    author: author ?? book.author,
-    quantity: quantity ?? book.quantity,
-    photo_url: file_url,
+    code: code || book.code,
+    title: title || book.title,
+    author: author || book.author,
+    quantity: quantity || book.quantity,
+    photo_url: file_url || null,
     updated_at: new Date()
   }, { transaction: t })
 
-  if (!file_url) {
-    if (book.photo_url) {
-      const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(book.photo_url)}`)
-      fs.unlinkSync(filePath)
-      await book.update({ photo_url: null }, { transaction: t })
-    }
+  if ((file_url || !file_url) && oldPhotoUrl) {
+    const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(oldPhotoUrl)}`)
+    fs.unlinkSync(filePath)
   }
 
   return bookUpdated
