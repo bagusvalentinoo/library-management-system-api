@@ -7,6 +7,7 @@ const { isOfficer: IsOfficer } = require('@middlewares/role.middleware')
 const Upload = require('@middlewares/local_storage.middleware')
 const BookController = require('@controllers/officer/book/book.controller')
 const MemberController = require('@controllers/officer/member/member.controller')
+const ProfileController = require('@controllers/officer/profile/profile.controller')
 
 // Book routes
 router.get('/books', ApiKey, Auth, IsOfficer, async (req, res) => {
@@ -64,6 +65,16 @@ router.delete('/members/:id', ApiKey, Auth, IsOfficer, async (req, res) => {
 
 router.delete('/members', ApiKey, Auth, IsOfficer, async (req, res) => {
   await MemberController.destroyBulk(req, res)
+})
+
+// Profile Routes
+
+router.get('/profile', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await ProfileController.show(req, res)
+})
+
+router.put('/profile', ApiKey, Auth, IsOfficer, Upload('/images/user/officer/profile', 'photo_profile'), async (req, res) => {
+  await ProfileController.update(req, res)
 })
 
 module.exports = router
