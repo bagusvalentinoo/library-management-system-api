@@ -2,8 +2,14 @@ require('module-alias/register')
 const express = require('express')
 const router = express.Router()
 const ApiKey = require('@middlewares/api_key.middleware')
+const ApiKeyController = require('@controllers/public/api-key/api_key.controller')
 const UserController = require('@controllers/public/user/user.controller')
 const BookController = require('@controllers/public/book/book.controller')
+
+// Api Key Route
+router.post('/api-key/generate', async (req, res) => {
+  await ApiKeyController.store(req, res)
+})
 
 // User Routes
 router.get('/users/check-username/:username', ApiKey, async (req, res) => {

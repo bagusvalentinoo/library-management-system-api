@@ -45,6 +45,21 @@ module.exports = (sequelize) => {
           }
         }
       },
+      expired_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Oops! Expired At cannot be empty'
+          },
+          notEmpty: {
+            msg: 'Oops! Expired At cannot be empty'
+          },
+          isDate: {
+            msg: 'Oops! Expired At must be a date'
+          }
+        }
+      },
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,

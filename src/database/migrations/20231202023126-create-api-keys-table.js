@@ -18,6 +18,10 @@ module.exports = {
         allowNull: false,
         defaultValue: 'Active'
       },
+      expired_at: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false
+      },
       created_at: {
         type: Sequelize.DataTypes.DATE,
         allowNull: false,
