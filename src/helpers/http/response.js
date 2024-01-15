@@ -47,6 +47,8 @@ const paginate = (model, page, limit, dataKey, resource) => {
       total_item: model.count,
       total_page: Math.ceil(model.count / limit),
       current_page: parseInt(page),
+      next_page: parseInt(page) + 1,
+      prev_page: parseInt(page) - 1,
       limit: parseInt(limit)
     }
   }

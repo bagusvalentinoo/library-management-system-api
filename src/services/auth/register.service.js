@@ -39,8 +39,7 @@ const createUserMember = async (req, t) => {
     updated_at: new Date()
   }, { transaction: t })
   await newUserMember.assignRole('Member', t)
-
-  return await newUserMember.createMember({
+  const newUserMemberProfile = await newUserMember.createMember({
     code,
     gender,
     phone_number,
@@ -49,6 +48,8 @@ const createUserMember = async (req, t) => {
     created_at: new Date(),
     updated_at: new Date()
   }, { transaction: t })
+
+  return { user: newUserMember, member: newUserMemberProfile }
 }
 
 module.exports = { createUserMember }
