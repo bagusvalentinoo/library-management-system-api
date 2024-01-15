@@ -7,6 +7,7 @@ const path = require('path')
 const schedule = require('node-schedule')
 require('module-alias/register')
 const cleanUpToken = require('@tasks/token/clean_up_token.task')
+const cleanUpApiKey = require('@tasks/api-key/clean_up_api_key.task')
 const ApiRouteV1 = require('@routes/v1/api.route')
 require('dotenv').config()
 
@@ -33,7 +34,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api/v1', ApiRouteV1)
 
-schedule.scheduleJob('0 0 * * *', cleanUpToken) // Run every 00:00 AM
+schedule.scheduleJob('0 0 * * *', cleanUpToken) // Run every 00:00
+schedule.scheduleJob('0 0 * * *', cleanUpApiKey) // Run every 00:00
 
 const port = process.env.APP_PORT || 8080
 
