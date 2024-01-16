@@ -39,6 +39,10 @@ router.get('/members', ApiKey, Auth, IsOfficer, async (req, res) => {
   await MemberController.index(req, res)
 })
 
+router.post('/members', ApiKey, Auth, IsOfficer, async (req, res) => {
+  await MemberController.store(req, res)
+})
+
 router.get('/members/:id', ApiKey, Auth, IsOfficer, async (req, res) => {
   await MemberController.show(req, res)
 })

@@ -7,6 +7,4 @@ const getDateTimeExpiredToken = (tokenBearer) => {
   return decoded && decoded.exp ? new Date(decoded.exp * 1000) : null
 }
 
-module.exports = {
-  getDateTimeExpiredToken
-}
+module.exports = { getDateTimeExpiredToken }

@@ -25,6 +25,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(50),
         allowNull: false,
         unique: {
+          args: true,
           msg: 'Oops! Role name already exists'
         },
         validate: {

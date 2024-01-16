@@ -7,7 +7,10 @@ const { Op, User } = require('@models')
 require('dotenv').config()
 
 const checkLoginCredentials = async (req) => {
-  const { username } = req.body
+  const { username, password } = req.body
+
+  if (!username || !password)
+    response.throwNewError(400, 'Oops! Fill all required fields')
 
   const user = await User.findOne({
     where: {
@@ -20,7 +23,7 @@ const checkLoginCredentials = async (req) => {
 
   if (!user)
     response.throwNewError(400, 'Oops! Username, or Email, and Password didn\'t match')
-  if (!bcrypt.compareSync(req.body.password, user.password))
+  if (!bcrypt.compareSync(password, user.password))
     response.throwNewError(400, 'Oops! Username, or Email, and Password didn\'t match')
 
   return user

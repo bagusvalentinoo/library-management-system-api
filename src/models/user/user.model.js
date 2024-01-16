@@ -71,6 +71,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(50),
         allowNull: false,
         unique: {
+          args: true,
           msg: 'Oops! Username already exists'
         },
         validate: {
@@ -90,6 +91,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(255),
         allowNull: false,
         unique: {
+          args: true,
           msg: 'Oops! Email already exists'
         },
         validate: {
