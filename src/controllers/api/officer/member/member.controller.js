@@ -1,6 +1,10 @@
 require('module-alias/register')
 const response = require('@helpers/http/response')
 const MemberService = require('@services/user/member.service')
+const RegisterService = require('@services/auth/register.service')
+const EmailService = require('@services/email/email.service')
+const WelcomeEmailTemplate = require('@templates/email/welcome.template')
+const MemberForMemberResource = require('@resources/user/member/member_for_member_resource')
 const MemberForOfficerResource = require('@resources/user/member/member_for_officer_resource')
 const { sequelize } = require('@models')
 
@@ -16,6 +20,32 @@ const index = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
+    return response.failed(res, error.status_code ?? 500, error)
+  }
+}
+
+const store = async (req, res) => {
+  const t = await sequelize.transaction()
+  try {
+    const { user, member, password } = await RegisterService.createUserMemberByOfficer(req, t)
+    await t.commit()
+    await EmailService.sendEmailMessage(
+      user.email,
+      'Welcome to Library Management System',
+      WelcomeEmailTemplate(user.email, user.username, password)
+    )
+    const memberr = await MemberService.getMemberById(member.id)
+
+    return response.success(
+      res,
+      201,
+      'Data successfully created',
+      new MemberForMemberResource(memberr),
+      'member'
+    )
+  } catch (error) {
+    console.log(error)
+    if (t) await t.rollback()
     return response.failed(res, error.status_code ?? 500, error)
   }
 }
@@ -128,6 +158,7 @@ const destroyBulk = async (req, res) => {
 
 module.exports = {
   index,
+  store,
   show,
   penaltyMember,
   clearPenaltyMember,

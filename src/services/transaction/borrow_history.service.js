@@ -17,8 +17,7 @@ const getBorrowHistories = async (req) => {
     subQuery: false,
     distinct: true,
     where: {
-      member_id: memberId,
-      is_returned: true
+      member_id: memberId
     },
     include: {
       model: Book,

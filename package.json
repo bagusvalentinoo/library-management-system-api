@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node",
+    "start": "node index",
     "dev": "nodemon",
     "make:migration": "sequelize-cli migration:generate --name",
     "make:seeder": "sequelize-cli seed:generate --name",
@@ -32,7 +32,9 @@
     "@routes": "src/routes/api",
     "@rules": "src/rules",
     "@services": "src/services",
-    "@tasks": "src/tasks"
+    "@tasks": "src/tasks",
+    "@templates": "src/templates",
+    "@tests": "src/tests"
   },
   "keywords": [],
   "author": "",
@@ -52,6 +54,8 @@
     "multer-firebase-storage": "^4.1.2",
     "mysql2": "^3.6.5",
     "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.8",
+    "nodemailer-html-to-text": "^3.2.0",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
