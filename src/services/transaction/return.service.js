@@ -34,7 +34,7 @@ const getReturnById = async (id) => {
 }
 
 const returnBook = async (req, borrow, t) => {
-  const isBookReturnDurationMoreThanSevenDays = await ReturnRule.isBookReturnDurationMoreThanSevenDays(borrow)
+  const isBookReturnDurationMoreThanSevenDays = ReturnRule.isBookReturnDurationMoreThanSevenDays(borrow.borrow_date)
 
   if (borrow.is_returned)
     response.throwNewError(400, 'Oops! The book has been returned')
@@ -49,19 +49,14 @@ const returnBook = async (req, borrow, t) => {
   if (isBookReturnDurationMoreThanSevenDays) {
     await Member.update({
       is_penalized: true,
-      penalty_end_date: new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),
+      penalty_end_date: new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000), // 3 days penalty
       updated_at: new Date()
     }, { where: { id: borrow.member_id }, transaction: t })
   }
 
-  const message = isBookReturnDurationMoreThanSevenDays
+  return isBookReturnDurationMoreThanSevenDays
     ? 'Successfully returned the book, but you are under penalty 3 days'
     : 'Successfully returned the book'
-
-  return {
-    message,
-    is_penalized: isBookReturnDurationMoreThanSevenDays
-  }
 }
 
 const increaseBookQuantity = async (bookId, t) => {

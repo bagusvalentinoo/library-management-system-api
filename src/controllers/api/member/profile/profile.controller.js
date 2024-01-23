@@ -1,7 +1,7 @@
 require('module-alias/register')
 const fs = require('fs')
 const response = require('@helpers/http/response')
-const { getMemberIdFromUserId } = require('@helpers/model/user')
+const { getMemberIdFromUserId } = require('@repositories/model/user/user.repository')
 const MemberService = require('@services/user/member.service')
 const MemberForMemberResource = require('@resources/user/member/member_for_member_resource')
 const { sequelize } = require('@models')

@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.DataTypes.ENUM('Male', 'Female', 'Other'),
         allowNull: false
       },
+      photo_profile_path: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: true
+      },
       photo_profile_url: {
         type: Sequelize.DataTypes.TEXT,
         allowNull: true

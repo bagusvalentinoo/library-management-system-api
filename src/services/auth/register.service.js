@@ -48,7 +48,6 @@ const createUserMember = async (req, t) => {
     gender,
     phone_number,
     address,
-    photo_profile_url: process.env.DEFAULT_AVATAR_URL,
     created_at: new Date(),
     updated_at: new Date()
   }, { transaction: t })
@@ -102,7 +101,6 @@ const createUserMemberByOfficer = async (req, t) => {
     gender,
     phone_number,
     address,
-    photo_profile_url: process.env.DEFAULT_AVATAR_URL,
     created_at: new Date(),
     updated_at: new Date()
   }, { transaction: t })

@@ -1,10 +1,7 @@
 require('module-alias/register')
-const path = require('path')
 const fs = require('fs')
 const response = require('@helpers/http/response')
-const { getFilePathFromUrl } = require('@helpers/storage/file')
 const { Officer, User } = require('@models')
-require('dotenv').config()
 
 const findOfficerById = async (id) => {
   const officer = await Officer.findByPk(id)
@@ -29,9 +26,11 @@ const updateProfileOfficer = async (req, officer, t) => {
   const { name, username, email, gender } = req.body
   const user = await User.findByPk(officer.user_id)
   const oldPhotoProfileUrl = officer.photo_profile_url
+  const oldPhotoProfilePath = officer.photo_profile_path
 
   const officerUpdated = await officer.update({
     gender: gender || officer.gender,
+    photo_profile_path: req.file.path || null,
     photo_profile_url: file_url || null,
     updated_at: new Date()
   }, { transaction: t })
@@ -45,10 +44,8 @@ const updateProfileOfficer = async (req, officer, t) => {
     }, { transaction: t })
   }
 
-  if ((!file_url || file_url) && oldPhotoProfileUrl && oldPhotoProfileUrl !== process.env.DEFAULT_AVATAR_URL) {
-    const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(oldPhotoProfileUrl)}`)
-    fs.unlinkSync(filePath)
-  }
+  if ((!file_url || file_url) && oldPhotoProfileUrl && oldPhotoProfilePath)
+    fs.unlinkSync(oldPhotoProfilePath)
 
   return officerUpdated
 }

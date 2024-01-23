@@ -10,7 +10,7 @@ const {
 require('dotenv').config()
 
 const upload = (folderName, fieldName, isMultiple = false) => (req, res, next) => {
-  const destination = __dirname + `/../public/${folderName ?? 'random'}`
+  const destination = path.join(__dirname, `/../public/${folderName ?? 'random'}`)
 
   if (!fs.existsSync(destination)) fs.mkdirSync(destination, { recursive: true })
 

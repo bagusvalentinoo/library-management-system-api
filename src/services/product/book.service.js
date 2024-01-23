@@ -1,9 +1,7 @@
 require('module-alias/register')
 const fs = require('fs')
-const path = require('path')
 const response = require('@helpers/http/response')
 const { orderBy } = require('@helpers/model/query')
-const { getFilePathFromUrl } = require('@helpers/storage/file')
 const BookForListOfficerCollection = require('@resources/product/book/book_for_list_officer_collection')
 const { Sequelize, Op, Book } = require('@models')
 
@@ -56,7 +54,8 @@ const createBook = async (req, t) => {
     title,
     author,
     quantity,
-    photo_url: file_url ?? null
+    photo_path: req.file.path || null,
+    photo_url: file_url || null
   }, { transaction: t })
 }
 
@@ -70,29 +69,27 @@ const updateBook = async (req, book, t) => {
   const { file_url } = req
   const { code, title, author, quantity } = req.body
   const oldPhotoUrl = book.photo_url
+  const oldPhotoPath = book.photo_path
 
   const bookUpdated = await book.update({
     code: code || book.code,
     title: title || book.title,
     author: author || book.author,
     quantity: quantity || book.quantity,
+    photo_path: req.file.path || null,
     photo_url: file_url || null,
     updated_at: new Date()
   }, { transaction: t })
 
-  if ((file_url || !file_url) && oldPhotoUrl) {
-    const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(oldPhotoUrl)}`)
-    fs.unlinkSync(filePath)
-  }
+  if ((file_url || !file_url) && oldPhotoUrl && oldPhotoPath)
+    fs.unlinkSync(oldPhotoPath)
 
   return bookUpdated
 }
 
 const deleteBook = async (req, book, t) => {
-  if (book.photo_url) {
-    const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(book.photo_url)}`)
-    fs.unlinkSync(filePath)
-  }
+  if (book.photo_url && book.photo_path)
+    fs.unlinkSync(book.photo_path)
 
   await book.destroy({ transaction: t })
 }

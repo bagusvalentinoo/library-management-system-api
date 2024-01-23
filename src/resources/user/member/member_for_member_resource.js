@@ -8,7 +8,6 @@ class MemberForMemberResource {
     this.gender = data.gender
     this.phone_number = data.phone_number
     this.address = data.address
-    this.photo_url = data.photo_url
     this.is_blocked = data.is_blocked
     this.is_penalized = data.is_penalized
     this.penalty_end_date = data.penalty_end_date

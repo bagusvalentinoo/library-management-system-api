@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "start": "node index",
     "dev": "nodemon",
     "make:migration": "sequelize-cli migration:generate --name",
@@ -28,6 +28,7 @@
     "@helpers": "src/helpers",
     "@middlewares": "src/middlewares",
     "@models": "src/models",
+    "@repositories": "src/repositories",
     "@resources": "src/resources",
     "@routes": "src/routes/api",
     "@rules": "src/rules",

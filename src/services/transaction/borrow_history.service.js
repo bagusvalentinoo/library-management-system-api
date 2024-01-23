@@ -1,6 +1,6 @@
 require('module-alias/register')
 const response = require('@helpers/http/response')
-const { getMemberIdFromUserId } = require('@helpers/model/user')
+const { getMemberIdFromUserId } = require('@repositories/model/user/user.repository')
 const { Sequelize, Op, Borrow, Book } = require('@models')
 const BorrowHistoryForMemberCollection = require('@resources/transaction/borrow_history/borrow_history_for_member_collection')
 
@@ -68,6 +68,4 @@ const getBorrowHistories = async (req) => {
   )
 }
 
-module.exports = {
-  getBorrowHistories
-}
+module.exports = { getBorrowHistories }

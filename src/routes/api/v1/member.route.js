@@ -14,8 +14,8 @@ router.post('/borrow', ApiKey, Auth, IsMember, async (req, res) => {
   await BorrowController.store(req, res)
 })
 
-router.post('/return', ApiKey, Auth, IsMember, async (req, res) => {
-  await ReturnController.store(req, res)
+router.put('/return', ApiKey, Auth, IsMember, async (req, res) => {
+  await ReturnController.update(req, res)
 })
 
 router.get('/borrow-history', ApiKey, Auth, IsMember, async (req, res) => {

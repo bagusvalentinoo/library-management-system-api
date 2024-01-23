@@ -18,16 +18,4 @@ const index = async (req, res) => {
   }
 }
 
-const show = async (req, res) => {
-  try {
-
-  } catch (error) {
-    console.log(error)
-    return response.failed(res, error.status_code ?? 500, error)
-  }
-}
-
-module.exports = {
-  index,
-  show
-}
+module.exports = { index }

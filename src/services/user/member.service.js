@@ -1,15 +1,12 @@
 require('module-alias/register')
-const path = require('path')
 const fs = require('fs')
 const response = require('@helpers/http/response')
 const {
   convertToUpperCase,
   convertToLowerCase
 } = require('@helpers/string/string_formatted')
-const { getFilePathFromUrl } = require('@helpers/storage/file')
 const MemberForListOfficerCollection = require('@resources/user/member/member_for_list_officer_collection')
 const { Sequelize, Op, Member, User, UserRole, UserToken } = require('@models')
-require('dotenv').config()
 
 const orderByCustom = (query) => {
   const { sort_by, sort_dir } = query
@@ -158,11 +155,13 @@ const updateProfileMember = async (req, member, t) => {
   const { name, username, email, gender, phone_number, address } = req.body
   const user = await User.findByPk(member.user_id)
   const oldPhotoProfileUrl = member.photo_profile_url
+  const oldPhotoProfilePath = member.photo_profile_path
 
   const memberUpdated = await member.update({
     gender: gender || member.gender,
     phone_number: phone_number || member.phone_number,
     address: address || member.address,
+    photo_profile_path: req.file.path || null,
     photo_profile_url: file_url || null,
     updated_at: new Date()
   }, { transaction: t })
@@ -176,15 +175,16 @@ const updateProfileMember = async (req, member, t) => {
     }, { transaction: t })
   }
 
-  if ((!file_url || file_url) && oldPhotoProfileUrl && oldPhotoProfileUrl !== process.env.DEFAULT_AVATAR_URL) {
-    const filePath = path.join(__dirname, `/../../public/${getFilePathFromUrl(oldPhotoProfileUrl)}`)
-    fs.unlinkSync(filePath)
-  }
+  if ((!file_url || file_url) && oldPhotoProfileUrl && oldPhotoProfilePath)
+    fs.unlinkSync(oldPhotoProfilePath)
 
   return memberUpdated
 }
 
 const deleteMember = async (req, member, t) => {
+  if (member.photo_profile_url && member.photo_profile_path)
+    fs.unlinkSync(member.photo_profile_path)
+
   await member.destroy({ transaction: t })
   await UserRole.destroy({ where: { user_id: member.user_id }, transaction: t })
   await UserToken.destroy({ where: { user_id: member.user_id }, transaction: t })

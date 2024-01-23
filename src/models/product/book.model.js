@@ -79,6 +79,10 @@ module.exports = (sequelize) => {
           }
         }
       },
+      photo_path: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
       photo_url: {
         type: DataTypes.TEXT,
         allowNull: true

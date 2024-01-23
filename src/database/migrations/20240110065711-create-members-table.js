@@ -1,5 +1,4 @@
 /** @type {import('sequelize-cli').Migration} */
-const {DataTypes} = require("sequelize");
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('members', {
@@ -34,6 +33,10 @@ module.exports = {
       address: {
         type: Sequelize.DataTypes.TEXT,
         allowNull: false
+      },
+      photo_profile_path: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: true
       },
       photo_profile_url: {
         type: Sequelize.DataTypes.TEXT,

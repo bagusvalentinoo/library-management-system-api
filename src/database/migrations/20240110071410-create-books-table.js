@@ -25,6 +25,10 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
       },
+      photo_path: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: true
+      },
       photo_url: {
         type: Sequelize.DataTypes.TEXT,
         allowNull: true

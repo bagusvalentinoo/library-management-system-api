@@ -1,6 +1,6 @@
 require('module-alias/register')
 const response = require('@helpers/http/response')
-const { getMemberIdFromUserId } = require('@helpers/model/user')
+const { getMemberIdFromUserId } = require('@repositories/model/user/user.repository')
 const BorrowRule = require('@rules/transaction/borrow.rule')
 const { Borrow, Book, Member, User } = require('@models')
 

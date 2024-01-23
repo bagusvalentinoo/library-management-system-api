@@ -1,7 +1,7 @@
 require('module-alias/register')
 const fs = require('fs')
 const response = require('@helpers/http/response')
-const { getOfficerIdFromUserId } = require('@helpers/model/user')
+const { getOfficerIdFromUserId } = require('@repositories/model/user/user.repository')
 const OfficerService = require('@services/user/officer.service')
 const OfficerForOfficerResource = require('@resources/user/officer/officer_for_officer_resource')
 const { sequelize } = require('@models')
