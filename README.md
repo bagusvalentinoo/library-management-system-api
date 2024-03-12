@@ -1,7 +1,7 @@
 # Library Management System
 
 ### API Documentation
-https://documenter.getpostman.com/view/17470787/2s9Yynk3tS
+https://documenter.getpostman.com/view/17470787/2sA2xiWrmd
 
 ### How to Use
 1. Clone the repository
